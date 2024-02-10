@@ -1,0 +1,4 @@
+name: gdv
+
+dependencies:
+  - python=3.10

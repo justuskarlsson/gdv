@@ -1,5 +1,5 @@
-PyOpenGL
-PyOpenGL_accelerate
 numpy
 dearpygui
-glfw
+moderngl
+moderngl-window
+pywavefront

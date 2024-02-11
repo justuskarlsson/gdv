@@ -64,7 +64,7 @@ import time
 
 import numpy
 from moderngl_window.utils.keymaps import QWERTY, KeyMapFactory
-
+from pyrr import Vector3, Matrix44, vector, vector3
 from moderngl_window.context.base import BaseKeys
 
 # Direction Definitions
@@ -327,23 +327,32 @@ class KeyboardCamera(Camera):
         # can suddenly move the camera far away from the scene
         t = max(now - self._last_time, 0)
         self._last_time = now
-
+        global_movement = False
+        if global_movement:
+            x_dir = Vector3([1, 0, 0])
+            y_dir = Vector3([0, -1, 0])
+            z_dir = Vector3([0, 0, -1])
+        else:
+            x_dir = self.right
+            # Temp fix, q is mapped to UP
+            y_dir = -self.up
+            z_dir = self.dir
         # X Movement
         if self._xdir == POSITIVE:
-            self.position += self.right * self._velocity * t
+            self.position += x_dir * self._velocity * t
         elif self._xdir == NEGATIVE:
-            self.position -= self.right * self._velocity * t
+            self.position -= x_dir * self._velocity * t
 
         # Z Movement
         if self._zdir == NEGATIVE:
-            self.position += self.dir * self._velocity * t
+            self.position += z_dir * self._velocity * t
         elif self._zdir == POSITIVE:
-            self.position -= self.dir * self._velocity * t
+            self.position -= z_dir * self._velocity * t
 
         # Y Movement
         if self._ydir == POSITIVE:
-            self.position += self.up * self._velocity * t
+            self.position += y_dir * self._velocity * t
         elif self._ydir == NEGATIVE:
-            self.position -= self.up * self._velocity * t
+            self.position -= y_dir * self._velocity * t
 
         return self._gl_look_at(self.position, self.position + self.dir, self._up)

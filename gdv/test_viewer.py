@@ -19,7 +19,7 @@ class Test(OrbitDragCameraWindow):
         super().__init__(**kwargs)
         self.cow_scene = self.load_scene('meshes/cow/cow.obj')
         self.camera = KeyboardCamera(self.wnd.keys, fov=75.0, aspect_ratio=self.wnd.aspect_ratio, near=0.1, far=1000.0)
-        self.camera.mouse_sensitivity = 0.25
+        self.camera.mouse_sensitivity = 0.15
 
     def render(self, time, frametime):
         self.ctx.clear(0.0, 0.0, 0.0, 0.0)

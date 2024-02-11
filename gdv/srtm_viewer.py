@@ -6,6 +6,8 @@ import moderngl
 from gdv.camera import KeyboardCamera
 import imgui
 from moderngl_window.integrations.imgui import ModernglWindowRenderer
+import numpy as np
+np.set_printoptions(2, floatmode="fixed", suppress=True)
 # from moderngl_window.scene.camera import KeyboardCamera
 
 class Test(mglw.WindowConfig):
@@ -22,31 +24,19 @@ class Test(mglw.WindowConfig):
         imgui.create_context()
         self.wnd.ctx.error
         self.imgui = ModernglWindowRenderer(self.wnd)
-        self.cow_scene = self.load_scene('meshes/cow/cow.obj')
         self.camera = KeyboardCamera(self.wnd.keys, fov=75.0, aspect_ratio=self.wnd.aspect_ratio, near=0.1, far=1000.0)
         self.camera.mouse_sensitivity = 0.15
 
     def render(self, time, frametime):
         self.ctx.clear(0.0, 0.0, 0.0, 0.0)
         self.ctx.enable(moderngl.DEPTH_TEST | moderngl.CULL_FACE)
-        cow_world_matrix = Matrix44.from_translation([time/10.0, 0, 0], "f4")
-        self.cow_scene.draw(
-            projection_matrix=self.camera.projection.matrix,
-            camera_matrix=self.camera.matrix * Matrix44.from_translation([0.5, 0, 0, 0], "f4"),
-            time=time,
-        )
 
-        self.cow_scene.draw(
-            projection_matrix=self.camera.projection.matrix,
-            camera_matrix=self.camera.matrix * Matrix44.from_translation([-0.5, 0, 0, 0], "f4"),
-            time=time,
-        )
         self.render_gui()
 
     def render_gui(self):
         imgui.new_frame()
-        ret = imgui.begin("Custom window", True)
-        print(ret)
+        imgui.begin("World", True)
+
         imgui.text(str(self.camera.matrix))
         imgui.end()
 

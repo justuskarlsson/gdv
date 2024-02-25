@@ -3,14 +3,17 @@ import moderngl
 from pathlib import Path
 import moderngl_window
 from moderngl_window import resources
+import os
+from time import sleep
+
+os.environ["PYGLET_VSYNC"] = "0"
 
 class FlatEarth(moderngl_window.WindowConfig):
     title="Flat earth"
     window_size = (1920, 1080)
     aspect_ratio = 16/9
     resizable=False
-    resource_dir = "/data/moderngl-resources/"
-
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         resources.register_dir("/data/moderngl-resources/")
@@ -36,6 +39,8 @@ class FlatEarth(moderngl_window.WindowConfig):
         #     0.0, 1000.0,
         #     dtype='f4',
         # )
+        print(f"{1 / frame_time:.0f} FPS      \r", end="", flush=True)
+        sleep(1 / 150.0)
         model_matrix = Matrix44.identity(dtype="f4") 
         camera_matrix = Matrix44.look_at((0, 0, -100 - time), (0, 0, 0), (0, 1, 0), dtype="f4")
         self.prog['m_proj'].write(projection_matrix)

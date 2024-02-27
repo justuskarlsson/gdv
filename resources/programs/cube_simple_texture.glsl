@@ -20,7 +20,7 @@ void main() {
     gl_Position =  m_proj * p;
     mat3 m_normal = inverse(transpose(mat3(m_view)));
     normal = m_normal * normalize(in_normal);
-    uv = in_texcoord_0 * vec2(-1.0, 1.0);
+    uv = in_texcoord_0 * vec2(1.0, 1.0);
     pos = p.xyz;
 }
 

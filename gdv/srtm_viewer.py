@@ -9,11 +9,12 @@ from moderngl_window.integrations.imgui import ModernglWindowRenderer
 import numpy as np
 np.set_printoptions(2, floatmode="fixed", suppress=True)
 # from moderngl_window.scene.camera import KeyboardCamera
-
+WIDTH = 1920
+HEIGHT = 1080
 class Test(mglw.WindowConfig):
     gl_version = (3, 3)
-    window_size = (1920, 1080)
-    aspect_ratio = 16 / 9
+    window_size = (WIDTH, HEIGHT)
+    aspect_ratio = WIDTH / HEIGHT
     title = "My Config"
     samples = 8
     resizable = False
@@ -35,8 +36,9 @@ class Test(mglw.WindowConfig):
 
     def render_gui(self):
         imgui.new_frame()
+        imgui.set_next_window_size(200, HEIGHT)
+        imgui.set_next_window_position(WIDTH - 200, 0)
         imgui.begin("World", True)
-
         imgui.text(str(self.camera.matrix))
         imgui.end()
 
